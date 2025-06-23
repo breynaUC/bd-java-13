@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 /**
  *
  * @author Docente
@@ -77,12 +78,49 @@ public class PrductoDaoImpl implements ProductoDao{
 
     @Override
     public Producto read(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String SQL= "SELECT *FROM producto WHERE idproducto=?";
+        Producto p = new Producto();
+        try {
+            cx = Conexion.getConnection();
+            ps = cx.prepareStatement(SQL);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                p.setIdproducto(rs.getInt("idproducto"));
+                p.setNombre(rs.getString("nombre"));
+                p.setPrecio(rs.getDouble("precio"));
+                p.setCantidad(rs.getInt("cantidad"));
+            }
+        
+        } catch (SQLException e) {
+            System.out.println("Error: "+e);
+        }        
+       return p;
+        
     }
 
     @Override
     public List<Producto> readAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String SQL= "SELECT *FROM producto";
+        List<Producto> lista = new ArrayList<>();
+        try {
+            cx = Conexion.getConnection();
+            ps = cx.prepareStatement(SQL);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Producto p = new Producto();
+                p.setIdproducto(rs.getInt("idproducto"));
+                p.setNombre(rs.getString("nombre"));
+                p.setPrecio(rs.getDouble("precio"));
+                p.setCantidad(rs.getInt("cantidad"));
+                lista.add(p);
+            }
+        
+        } catch (SQLException e) {
+            System.out.println("Error: "+e);
+        }        
+       return lista;
+        
     }
     
 }
