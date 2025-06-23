@@ -24,7 +24,7 @@ public class PrductoDaoImpl implements ProductoDao{
     @Override
     public int create(Producto t) {
         String SQL= "INSERT INTO producto (idproducto, nombre, precio, cantidad)"
-                + " values(?,?,?)";
+                + " values(0,?,?,?)";
         int x = 0;
         try {
             cx = Conexion.getConnection();
